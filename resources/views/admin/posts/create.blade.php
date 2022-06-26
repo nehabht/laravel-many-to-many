@@ -23,6 +23,7 @@
           <label for="content" class="form-label">Content</label>
           <textarea class="form-control" name="content" id="content" rows="4" value="{{old('content')}}"></textarea>
         </div>
+
         <div class="mb-3">
         <label for="category_id" class="form-label">Categories</label>
         <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
@@ -32,6 +33,22 @@
             @endforeach
         </select>
         </div>
+
+        <div class="mb-3">
+            <label for="tags" class="form-label">
+                Tags
+            </label>
+            <select multiple class="form-select" name="tags[]" id="tags" aria-label="tags">
+                <option value="">Select tags</option>
+                @forelse ($tags as $tag )
+                <option value="{{$tag->id}}">{{ $tag->name}} </option>
+
+                @empty
+                <option value="">No Tags </option>
+                @endforelse
+            </select>
+        </div>
+
         
         <button type="submit" class="btn btn-primary text-white">Add Post</button> 
 

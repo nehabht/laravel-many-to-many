@@ -10,7 +10,21 @@
         <h1>{{$post->title}}</h1>
         <div class="metadata">
             Category: {{$post->category ? $post->category->name : "no categories"}}
+            <span>
+                <div class="tags">
+                    <strong>Tags: </strong>
+                        @if (count($post->tags) > 0)
+                            @foreach ($post->tags as $tag )
+                            <span>#{{$tag->name}} </span>
+                            @endforeach
+                        @else
+                        <span>N/A</span>
+
+                        @endif
+                </div>
+            </span>
         </div>
+
         <div class="content">
             {{$post->content}}
         </div>
