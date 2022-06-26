@@ -40,7 +40,24 @@
             <option value="" disabled> No categories to select</option>
             @endforelse
         </select>
-    </div>
+
+        <div class="mb-3 mt-3">
+            <label for="tags" class="form-label">Tags</label>
+            <select multiple class="form-select" name="tags[]" id="tags" aria-label="Tags">
+                <!-- <option value="">Select tags</option> -->
+                @forelse ($tags as $tag )
+
+                @if($errors->any())
+                <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'selected' : ''}}>{{ $tag->name}} </option>
+                @else
+                <option value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'selected' : ''}}>{{ $tag->name}} </option>
+                @endif
+                @empty
+                <option value="">No Tags </option>
+                @endforelse
+
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary text-white">Edit Post</button>
 
     </form>

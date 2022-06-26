@@ -86,8 +86,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -102,12 +103,14 @@ class PostController extends Controller
         //dd($request->all());
         /*validate data con PostRequest*/
         //$val_data = $request->validated();
+
         /*validate data unique*/
         $val_data = $request->validate([
             'title' => ['required', Rule::unique('posts')->ignore($post)],
             'cover_image' => 'nullable',
             'content' => 'nullable',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id',
         ]);
 
         //dd($val_data);
@@ -116,6 +119,9 @@ class PostController extends Controller
         $val_data['slug'] = $slug;
         //update data
         $post->update($val_data);
+
+        //sync tags
+        $post->tags()->sync($request->tags);
 
         //redirect to get route
         return redirect()->route('admin.posts.index')->with('message', "$post->title Your post is now updated!");

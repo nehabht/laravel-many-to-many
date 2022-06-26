@@ -39,7 +39,7 @@
                 Tags
             </label>
             <select multiple class="form-select" name="tags[]" id="tags" aria-label="tags">
-                <option value="">Select tags</option>
+                <!-- <option value="">Select tags</option> -->
                 @forelse ($tags as $tag )
                 <option value="{{$tag->id}}">{{ $tag->name}} </option>
 
