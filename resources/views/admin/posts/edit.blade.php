@@ -17,7 +17,7 @@
         </div>
         <div class="d-flex">
             <div class="media me-4">
-                <img class="shadow" width="150" src="{{asset('storage' . $post->cover_image) }}" alt="{{$post->title}}">
+                <img class="shadow" width="150" src="{{asset('storage/' . $post->cover_image) }}" alt="{{$post->title}}">
             </div>
             <div class="mb-4">
                 <label for="cover_image">cover_image</label>

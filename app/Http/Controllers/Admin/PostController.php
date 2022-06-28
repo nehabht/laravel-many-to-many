@@ -70,12 +70,17 @@ class PostController extends Controller
             ]);
 
             $path = Storage::put('post_image', $request->cover_image);
+            //dd($path);
+
+            $val_data['cover_image'] = $path;
         }
 
 
 
         //create the resource
         $new_post = Post::create($val_data);
+        // $new_post->cover_image = $path;
+        // $new_post->save();
         $new_post->tags()->attach($request->tags);
         //redirect to a get route
         return redirect()->route('admin.posts.index')->with('message', 'Post Created gj!');
@@ -132,6 +137,24 @@ class PostController extends Controller
         //generate slug
         $slug = Str::slug($request->title, '-');
         $val_data['slug'] = $slug;
+
+        //file
+
+        if ($request->hasFile('cover_image')) {
+            $request->validate([
+                'cover_image' => 'nullable|image|max:250',
+            ]);
+
+            //salvo nel filesystem
+            Storage::delete($post->cover_image);
+            //recupero il percorso
+
+            $path = Storage::put('post_image', $request->cover_image);
+
+            $val_data['cover_image'] = $path;
+        }
+
+
         //update data
         $post->update($val_data);
 
