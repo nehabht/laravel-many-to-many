@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -59,6 +60,20 @@ class PostController extends Controller
         //dd($slug);
         $val_data['slug'] = $slug;
         //dd($val_data);
+
+        //verificare se la richiesta contiene un file
+
+        if ($request->hasFile('cover_image')) {
+            //valida il file
+            $request->validate([
+                'cover_image' => 'nullable|image|max:250',
+            ]);
+
+            $path = Storage::put('post_image', $request->cover_image);
+        }
+
+
+
         //create the resource
         $new_post = Post::create($val_data);
         $new_post->tags()->attach($request->tags);

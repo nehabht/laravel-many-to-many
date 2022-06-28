@@ -29,7 +29,7 @@
                     <td scope="row ">{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->slug }}</td>
-                    <td><img width="150px" src="{{ $post->cover_image }}" alt="" srcset=""></td>
+                    <td><img width="150px" src="{{ asset('storage/' . $post->cover_image) }}" alt="" srcset=""></td>
                     <td>
                         <a href="{{ route('admin.posts.show', $post->slug) }}" class="btn btn-primary text-white">View</a>
                         <a href="{{ route('admin.posts.edit', $post->slug) }}" class="btn btn-dark">Edit</a>

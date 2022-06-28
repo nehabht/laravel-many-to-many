@@ -6,7 +6,7 @@
 
 <div class="container w-50 pt-4 ">
     @include('partials.errors')
-    <form action="{{ route('admin.posts.store')}}" method="post">
+    <form action="{{ route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
     @csrf
 
         <div class="mb-3">
@@ -16,7 +16,7 @@
         </div>
         <div class="mb-3">
             <label for="cover_image" class="form-label">Cover image</label>
-            <input type="text" name="cover_image" id="cover_image" class="form-control @error('title') is-invalid @enderror" placeholder="Url image" aria-describedby="cover_image" value="{{old('cover_image')}}">
+            <input type="file" name="cover_image" id="cover_image" class="form-control @error('title') is-invalid @enderror" placeholder="Url image" aria-describedby="cover_image" value="{{old('cover_image')}}">
             <small id="helpId" class="text-muted">Url of the image</small>
         </div>
         <div class="mb-3">
