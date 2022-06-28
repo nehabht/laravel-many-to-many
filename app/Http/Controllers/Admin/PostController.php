@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Mail\NewPostCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Mail;
 class PostController extends Controller
 {
     /**
@@ -82,6 +83,13 @@ class PostController extends Controller
         // $new_post->cover_image = $path;
         // $new_post->save();
         $new_post->tags()->attach($request->tags);
+
+        //view mail anteprima
+        //return (new NewPostCreated($new_post))->render();
+
+
+        Mail::to($request->user())->send(new NewPostCreated($new_post));
+
         //redirect to a get route
         return redirect()->route('admin.posts.index')->with('message', 'Post Created gj!');
     }
